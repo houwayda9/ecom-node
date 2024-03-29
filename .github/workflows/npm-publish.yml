@@ -59,7 +59,8 @@ jobs:
          cd houwayda9/ecom-kustomize/kustomize
          ls -l  
          cd overlays/dev
-         sed -i "s/houwayda\/ecom-back:latest/houwayda\/ecom-back:${{ github.sha }}/g"  kustomization.yaml 
+         TAG=$(echo "${{ github.sha }}")
+         sed -i "s#houwayda/ecom-back:.*#houwayda/ecom-back:$TAG#g" kustomization.yaml
          cat kustomization.yaml
          ls -l
       - name: Update Kustomize file
