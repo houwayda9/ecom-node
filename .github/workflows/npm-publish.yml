@@ -1,0 +1,74 @@
+name: Build step
+
+on:
+  push:
+    branches: 
+     - main
+     - dev
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js 
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16.x'
+    - run: npm ci
+  build-and-push-docker-image :
+    name: login to DockerHub and push image to repositorie
+    runs-on: ubuntu-latest
+    needs: ['build']
+    steps:
+     - name: Checkout code
+       uses: actions/checkout@v3
+     - name: Login to DockerHub
+       uses: docker/login-action@v2
+       with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+     - name: Build image and push to Docker Hub 
+       uses: docker/build-push-action@v2
+       with:
+          # relative path to the place where source code with Dockerfile is located
+          context: ./
+          # Note: tags has to be all lower-case
+          tags: |
+            houwayda/ecom-back:${{ github.sha }} 
+            
+          # build on feature branches, push only on main branch
+          push: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'}}
+  update-kustomize-file-overrlays:
+     if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main'
+     runs-on: ubuntu-latest
+     needs: ['build-and-push-docker-image']
+     steps:
+      - name: Checkout another repository
+        uses: actions/checkout@v2
+        with:
+          repository: houwayda9/ecom-kustomize
+          ref: main
+          token: ${{ secrets.G_TOKEN }}
+          path: houwayda9/ecom-kustomize 
+      - name: Debug
+        run: |
+         cd houwayda9/ecom-kustomize/kustomize
+         ls -l  
+         cd overlays/dev
+         sed -i "s|newTag: .*|newTag: ${{ github.sha }}|" kustomization.yaml 
+         cat kustomization.yaml
+         ls -l
+      - name: Update Kustomize file
+        run: |
+            pwd
+            cd houwayda9/ecom-kustomize/kustomize/overlays/dev
+            git config --global user.email ${{ secrets.USER_EMAIL }}
+            git config --global user.name ${{ secrets.USER_NAME }}
+            git add kustomization.yaml
+            git commit -m "Update image for - ${{ github.sha }}"
+            git push origin main
+            
