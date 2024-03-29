@@ -5,6 +5,7 @@ on:
     branches: 
      - main
      - dev
+     - prod
   pull_request:
     branches: [ "main" ]
 
@@ -41,9 +42,9 @@ jobs:
             houwayda/ecom-back:${{ github.sha }} 
             
           # build on feature branches, push only on main branch
-          push: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'}}
+          push: ${{ github.ref == 'refs/heads/prod' || github.ref == 'refs/heads/dev'}}
   update-kustomize-file-overrlays:
-     if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main'
+     if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/prod'
      runs-on: ubuntu-latest
      needs: ['build-and-push-docker-image']
      steps:
