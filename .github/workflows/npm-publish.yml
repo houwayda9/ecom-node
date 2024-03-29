@@ -54,20 +54,26 @@ jobs:
           ref: main
           token: ${{ secrets.G_TOKEN }}
           path: houwayda9/ecom-kustomize 
-      - name: Debug
-        run: |
-         cd houwayda9/ecom-kustomize/kustomize
-         ls -l  
-         cd overlays/dev
-         TAG=$(echo "${{ github.sha }}")
-         TAG=$(echo "${{ github.sha }}")
-         sed -i '/^images:$/,/^$/ { /- name: houwayda\/ecom-back/,/newTag:/ s/newTag: .*/newTag: ${{ github.sha }}/ }' kustomization.yaml
-         cat kustomization.yaml
-         ls -l
+      
       - name: Update Kustomize file
         run: |
-            pwd
-            cd houwayda9/ecom-kustomize/kustomize/overlays/dev
+            case "${{ github.ref }}" in
+             "refs/heads/dev")
+              overlay_dir="dev"
+              ;;
+             "refs/heads/prod")
+              overlay_dir="prod"
+              ;;
+              "refs/heads/main")
+              overlay_dir="main"
+              ;;
+             *)
+              echo "Unexpected branch: ${{ github.ref }}"
+              exit 1
+              ;;
+            esac
+            cd houwayda9/ecom-kustomize/kustomize/overlays/${overlay_dir}
+            sed -i '/^images:$/,/^$/ { /- name: houwayda\/ecom-back/,/newTag:/ s/newTag: .*/newTag: ${{ github.sha }}/ }' kustomization.yaml
             git config --global user.email ${{ secrets.USER_EMAIL }}
             git config --global user.name ${{ secrets.USER_NAME }}
             git add kustomization.yaml
