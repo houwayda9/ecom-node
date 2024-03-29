@@ -60,7 +60,8 @@ jobs:
          ls -l  
          cd overlays/dev
          TAG=$(echo "${{ github.sha }}")
-         sed -i "s#houwayda/ecom-back:.*#houwayda/ecom-back:$TAG#g" kustomization.yaml
+         TAG=$(echo "${{ github.sha }}")
+         sed -i '/- name: houwayda\/ecom-front/{n;s/newTag: .*/newTag: <new_tag>/}'  kustomization.yam
          cat kustomization.yaml
          ls -l
       - name: Update Kustomize file
