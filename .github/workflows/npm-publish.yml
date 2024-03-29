@@ -61,7 +61,7 @@ jobs:
          cd overlays/dev
          TAG=$(echo "${{ github.sha }}")
          TAG=$(echo "${{ github.sha }}")
-         sed -i '/- name: houwayda\/ecom-front/{n; /newTag:/s/:.*/: ${{ github.sha }}/}'  kustomization.yaml
+         sed -i '/^images:$/,/^$/ { /- name: houwayda\/ecom-back/,/newTag:/ s/newTag: .*/newTag: ${{ github.sha }}/ }' kustomization.yaml
          cat kustomization.yaml
          ls -l
       - name: Update Kustomize file
