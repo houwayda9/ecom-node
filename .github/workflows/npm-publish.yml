@@ -4,7 +4,6 @@ name: Build step
 on:
   push:
     branches: 
-    
      - prod
   pull_request:
     branches: [ "main" ]
@@ -24,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        environment: [prod]  # Add more environments if needed
+        environment: [prod]  
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
