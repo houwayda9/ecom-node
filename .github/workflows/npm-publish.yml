@@ -21,9 +21,8 @@ jobs:
   build-and-push-docker-image:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        environment: [prod]  
+    environment:
+      name: prod 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
