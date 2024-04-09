@@ -41,7 +41,8 @@ jobs:
         with:
           context: ./
           tags: |
-            houwayda/ecom-back:${{ matrix.environment }}-${{ github.sha }}
+            houwayda/ecom_prod:${{ matrix.environment }}-${{ github.sha }}
+          push: true
   update-kustomize-file-overrlays:
      if:  github.ref == 'refs/heads/prod'
      runs-on: ubuntu-latest
