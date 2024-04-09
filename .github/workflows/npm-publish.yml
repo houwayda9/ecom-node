@@ -4,8 +4,7 @@ name: Build step
 on:
   push:
     branches: 
-     - main
-     - dev
+    
      - prod
   pull_request:
     branches: [ "main" ]
@@ -20,32 +19,31 @@ jobs:
       with:
         node-version: '16.x'
     - run: npm ci
-  build-and-push-docker-image :
-    name: login to DockerHub and push image to repositorie
+  build-and-push-docker-image:
+    name: Build and Push Docker Image
     runs-on: ubuntu-latest
-    needs: ['build']
+    strategy:
+      matrix:
+        environment: [prod]  # Add more environments if needed
     steps:
-     - name: Checkout code
-       uses: actions/checkout@v3
-     - name: Login to DockerHub
-       uses: docker/login-action@v2
-       with:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       
-     - name: Build image and push to Docker Hub 
-       uses: docker/build-push-action@v2
-       with:
-          # relative path to the place where source code with Dockerfile is located
+      - name: Build image and push to Docker Hub 
+        if: github.ref == 'refs/heads/prod' && matrix.environment == 'prod'
+        uses: docker/build-push-action@v2
+        with:
           context: ./
-          # Note: tags has to be all lower-case
           tags: |
-            houwayda/ecom-back:${{ github.sha }} 
-            
-          # build on feature branches, push only on main branch
-          push: ${{ github.ref == 'refs/heads/prod' || github.ref == 'refs/heads/dev'}}
+            houwayda/ecom-back:${{ matrix.environment }}-${{ github.sha }}
   update-kustomize-file-overrlays:
-     if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/prod'
+     if:  github.ref == 'refs/heads/prod'
      runs-on: ubuntu-latest
      needs: ['build-and-push-docker-image']
      steps:
