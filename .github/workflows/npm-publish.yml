@@ -27,7 +27,7 @@ jobs:
           password:  ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Build image and push to Docker Hub 
-        if: github.ref == 'refs/heads/prod' 
+        if: github.ref == 'refs/heads/prod 
         uses: docker/build-push-action@v2
         with:
           context: ./
@@ -35,7 +35,7 @@ jobs:
             houwayda/ecom_prod:${{ github.sha }}
           push: true
 
-  update-kustomize-file-overrlays:
+   update-kustomize-file-overrlays:
      if:  github.ref == 'refs/heads/prod'
      runs-on: ubuntu-latest
      needs: ['build-and-push-docker-image']
