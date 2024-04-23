@@ -22,11 +22,14 @@ jobs:
     - name: Login to DockerHub - Prod
       if: github.ref == 'refs/heads/prod'
       uses: docker/login-action@v2
+      env:
+          ENVIRONMENT: prod 
       with:
+        
         username: ${{ vars.DOCKER_USERNAME_PROD }}
         password: ${{ secrets.DOCKER_PASSWORD_PROD }}
-      env:
-        ENVIRONMENT: production
+      
+      
 
     - name: Login to DockerHub - Other Branches
       if: github.ref != 'refs/heads/prod'
