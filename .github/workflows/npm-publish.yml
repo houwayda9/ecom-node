@@ -33,7 +33,7 @@ jobs:
         with:
           context: ./
           tags: |
-            houwayda/ecom_back:${{ github.sha }}
+            houwayda/ecom_back_${{ github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}:${{ github.sha }}
           push: true
 
    
