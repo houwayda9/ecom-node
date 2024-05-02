@@ -74,7 +74,6 @@ jobs:
             git push origin main
  
    test:
-    if:  github.ref == 'refs/heads/prod'
     runs-on: ubuntu-latest
     steps:
      - name: test
