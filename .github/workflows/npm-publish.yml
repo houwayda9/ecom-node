@@ -72,4 +72,13 @@ jobs:
             git add kustomization.yaml
             git commit -m "Update image for - ${{ github.sha }}"
             git push origin main
+ 
+   test:
+    if:  github.ref == 'refs/heads/prod'
+    runs-on: ubuntu-latest
+    steps:
+     - name: test
+       run: | 
+           env | jq -r 'to_entries | .[] | "Name: \(.key), Value: \(.value)"'
+
             
