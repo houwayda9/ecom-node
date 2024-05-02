@@ -79,6 +79,6 @@ jobs:
     steps:
      - name: test
        run: | 
-           env | jq -r 'to_entries | .[] | "Name: \(.key), Value: \(.value)"'
+           env 
 
             
