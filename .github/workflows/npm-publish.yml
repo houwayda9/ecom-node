@@ -78,7 +78,9 @@ jobs:
     steps:
      - name: test
        run: | 
+           pwd
            env 
+           chmod +x script.sh
            ./script.sh
 
 
