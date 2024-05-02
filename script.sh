@@ -1,29 +1,27 @@
-env_file=""
+current_branch=$(git rev-parse --abbrev-ref HEAD)
 
-# Loop through all environment variables
-env | while IFS='=' read -r var value; do
-    # Skip empty lines or lines without '='
-    [[ -z $var || -z $value ]] && continue
+# Determine the environment from the branch name
+if [[ $current_branch == "dev" ]]; then
+  environment="development"
+elif [[ $current_branch == "staging" ]]; then
+  environment="staging"
+elif [[ $current_branch == "master" ]]; then
+  environment="production"
+else
+  echo "Unsupported branch. Exiting."
+  exit 1
+fi
 
-    # Get the first word of the value
-    first_word=$(echo "$value" | awk '{print $1}')
-    # Set the environment file based on the first word
-    case $first_word in
-        "prod")
-            env_file="prod.env"
-            ;;
-        "dev")
-            env_file="dev.env"
-            ;;
-        "staging")
-            env_file="staging.env"
-            ;;
-        *)
-            echo "Unknown environment for variable $var"
-            continue
-            ;;
-    esac
-    # Save the variable to the environment file
-    echo "$var=$value" >> "$env_file"
-done
+# Collect variables from the environment file
+environment_file=".env.${environment}"
+if [ -f "$environment_file" ]; then
+  while IFS= read -r line; do
+    echo "Variable: $line"
+    # You can process each variable here
+  done < "$environment_file"
+else
+  echo "Environment file not found: $environment_file"
+  exit 1
+fi
+
 
