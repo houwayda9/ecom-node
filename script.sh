@@ -22,10 +22,12 @@ echo "Environment: $environment"
 # Convert environment prefix to uppercase
 prefix=$(echo "$environment" | tr '[:lower:]' '[:upper:]')_
 
-echo " $prefix "
+# Create .env file and inject variables and secrets
+env_file=".env.$environment"
+echo "# Environment: $environment" > "$env_file"
 
-
-for var in $(env | grep "^$prefix" ); do
+# Loop through environment variables and secrets with the specified prefix
+for var in $(env | grep "^$prefix" | cut -d= -f1); do
     clean_var_name=$(echo $var | sed "s/$prefix//")
     # If the variable is a secret, access it using GitHub Actions syntax
     if [[ $var =~ ^$prefix ]]; then
@@ -33,8 +35,4 @@ for var in $(env | grep "^$prefix" ); do
     else
         value=$(printenv | grep "^$var=" | sed 's/^[^=]*=//')
     fi
-    # Append the variable and its value to the .env file
-    echo "$clean_var_name=$value" >> $environment
-done
-echo "Contents of .env file:"
-cat .$environment
+    # Append the variable and its value to
