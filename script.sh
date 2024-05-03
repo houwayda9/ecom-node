@@ -5,8 +5,8 @@ if [[ $current_branch == "dev" ]]; then
   environment="development"
 elif [[ $current_branch == "staging" ]]; then
   environment="staging"
-elif [[ $current_branch == "master" ]]; then
-  environment="production"
+elif [[ $current_branch == "prod" ]]; then
+  environment="prod"
 else
   echo "Unsupported branch. Exiting."
   exit 1
