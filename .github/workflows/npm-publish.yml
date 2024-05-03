@@ -18,16 +18,17 @@ jobs:
     environment:
       name: ${{ github.ref == 'refs/heads/prod' && 'prod' || 'dev' }} 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout another repository
+        uses: actions/checkout@v2
+        with:
+          repository: houwayda9/ecom-node
+          token: ${{ secrets.VARSECRET }}
 
-      - name: ls
-        run:  ls -la
-     
-
-      - name: Export secrets to .env file
+      - name: env file
         run: |
-           bash ./script.sh 
+           bash ./script.sh        
+          
+         
 
 
    
