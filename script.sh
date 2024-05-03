@@ -14,12 +14,9 @@ echo "# Environment: $environment" > .env
 # Assuming you have variables named like "PROD_VARIABLE_NAME", "DEV_VARIABLE_NAME", "STAGING_VARIABLE_NAME"
 prefix="${environment}_"
 for var in $(compgen -v | grep "^$prefix"); do
-    # Remove the prefix from the variable name
-    var_name="${var#$prefix}"
-    # Get the value of the variable
-    var_value="${!var}"
+    
     # Write variable to .env file
-    echo "$var_name=$var_value" >> .env
+    echo "$var" >> .env
 done
 
 echo "Environment file generated."
