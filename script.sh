@@ -23,7 +23,7 @@ echo "Environment: $environment"
 prefix=$(echo "$environment" | tr '[:lower:]' '[:upper:]')_
 
 # Filter and process environment variables based on prefix
-filtered_variables=$(printenv | grep "^$prefix")
+filtered_variables=$(env | grep "^$prefix")
 
 # Environment file
 environment_file=".env.${environment}"
