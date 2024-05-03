@@ -28,7 +28,7 @@ jobs:
         run: |
            bash ./script.sh > env  
            
-          cat env
+           cat env
          
 
 
