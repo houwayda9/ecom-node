@@ -23,13 +23,8 @@ jobs:
 
       - name: ls
         run:  ls -la
-      - name: test
-        run: |
-          echo "Reading variables from the environment..."
-          variables=("PROD_HOST" "PROD_URL" "OTHER_VARIABLE")  
-          for var in "${variables[@]}"; do
-            echo "$var=${{ secrets.$var }}"
-          done
+      - name: Display environment variables
+        run: env | grep "^PROD_"
 
    
 
