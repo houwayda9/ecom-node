@@ -27,7 +27,8 @@ jobs:
         run: |
           set -x script.sh
         
-          bash .github/workflows/script.sh > .env
+          bash  ./script.sh > .env
+          cat .env 
           
 
       
