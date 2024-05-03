@@ -1,26 +1,12 @@
 #!/bin/bash
 
-echo "Generating environment file..."
+# Extract branch name from GITHUB_REF
+BRANCH=$(echo $GITHUB_REF | sed 's|refs/heads/||')
+PREFIX=$(echo $BRANCH | awk '{print toupper($0)}')_
 
-# Determine the environment based on the branch name
-environment=$(echo "$GITHUB_REF_NAME" | tr '[:lower:]' '[:upper:]')
-
-echo "Environment: $environment"
-
-# Create an environment file
-echo "# Environment: $environment" > .env
-
-# List all variables specific to the environment
-for var in $(compgen -e); do
-    # Check if the variable starts with the environment prefix
-    if [[ "$var" == "${environment}_"* ]]; then
-        # Remove the environment prefix
-        var_name="${var#${environment}_}"
-        # Get the value of the variable
-        var_value="${!var}"
-        # Write variable to .env file
-        echo "$var_name=$var_value" >> .env
-    fi
+# Export all environment-specific secrets dynamically
+for var in $(env | grep "^$PREFIX"); do
+    clean_var_name=$(echo $var | cut -d= -f1 | sed "s/$PREFIX//")
+    value=$(echo $var | cut -d= -f2-)
+    echo "$clean_var_name=$value" >> .env
 done
-
-echo "Environment file generated."
