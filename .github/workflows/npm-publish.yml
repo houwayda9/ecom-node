@@ -31,7 +31,7 @@ jobs:
 
       - name: Export secrets to .env file
         run: |
-          bash .github/workflows/scripts/set_dynamic_env.sh > .env
+          ./script.sh 
 
 
    
