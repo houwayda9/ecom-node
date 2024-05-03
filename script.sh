@@ -28,14 +28,8 @@ echo "# Environment: $environment" > "$env_file"
 
 # Loop through environment variables and secrets with the specified prefix
 for var in $(env | grep "^$prefix" | cut -d= -f1); do
-    cat $env_file
-    clean_var_name=$(echo $var | sed "s/$prefix//")
-    # If the variable is a secret, access it using GitHub Actions syntax
-    if [[ $var =~ ^$prefix ]]; then
-        
-        value=$(env | grep "^$var=" | sed 's/^[^=]*=//')
-    fi
-    # Append the variable and its value to
-    echo "$clean_var_name=$value" >> .env.$environment
+   clean_var_name=$(echo $var | sed "s/$PREFIX//")
+    echo "$clean_var_name=$(env | grep "^$var=" | sed 's/^[^=]*=//')" >> .env_file
+    cat .env_file
 done
 
