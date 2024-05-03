@@ -25,7 +25,7 @@ prefix=$(echo "$environment" | tr '[:lower:]' '[:upper:]')_
 echo " $prefix "
 
 
-for var in $(printenv | grep "^$prefix" | cut -d= -f1); do
+for var in $(printenv | grep "^$prefix" ); do
     clean_var_name=$(echo $var | sed "s/$prefix//")
     # If the variable is a secret, access it using GitHub Actions syntax
     if [[ $var =~ ^$prefix ]]; then
