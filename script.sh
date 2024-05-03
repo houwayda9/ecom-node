@@ -29,18 +29,19 @@ if [ ! -f "$environment_file" ]; then
   # Create environment file based on the environment
   if [[ $environment == "development" ]]; then
     # Create .env.dev with default values
-    echo "VAR1=value1" > "$environment_file"
-    echo "VAR2=value2" >> "$environment_file"
+      printenv > "$environment_file"
+
+  
     # Add more variables as needed
   elif [[ $environment == "staging" ]]; then
     # Create .env.staging with default values
-    echo "VAR1=value1" > "$environment_file"
-    echo "VAR2=value2" >> "$environment_file"
+      printenv > "$environment_file"
+
     # Add more variables as needed
   elif [[ $environment == "prod" ]]; then
     # Create .env.prod with default values
-    echo "VAR1=value1" > "$environment_file"
-    echo "VAR2=value2" >> "$environment_file"
+      printenv > "$environment_file"
+
     # Add more variables as needed
   fi
 
