@@ -11,3 +11,4 @@ for var in $(env | grep "^$PREFIX"); do
     value=$(echo $var | cut -d= -f2-)
     echo "$clean_var_name=$value" >> env
 done
+cat env
