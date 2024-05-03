@@ -19,6 +19,10 @@ fi
 
 echo "Environment: $environment"
 
+# Filter and process environment variables based on prefix
+prefix="${environment}_"
+filtered_variables=$(printenv | grep "^$prefix")
+
 # Environment file
 environment_file=".env.${environment}"
 
@@ -26,24 +30,8 @@ environment_file=".env.${environment}"
 if [ ! -f "$environment_file" ]; then
   echo "Environment file not found. Creating..."
 
-  # Create environment file based on the environment
-  if [[ $environment == "development" ]]; then
-    # Create .env.dev with default values
-      printenv > "$environment_file"
-
-  
-    # Add more variables as needed
-  elif [[ $environment == "staging" ]]; then
-    # Create .env.staging with default values
-      printenv > "$environment_file"
-
-    # Add more variables as needed
-  elif [[ $environment == "prod" ]]; then
-    # Create .env.prod with default values
-      printenv > "$environment_file"
-
-    # Add more variables as needed
-  fi
+  # Write filtered environment variables to environment file
+  echo "$filtered_variables" > "$environment_file"
 
   echo "Environment file created: $environment_file"
 fi
@@ -53,7 +41,3 @@ while IFS= read -r line; do
   echo "Variable: $line"
   # You can process each variable here
 done < "$environment_file"
-
-
-
-
