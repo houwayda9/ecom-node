@@ -27,7 +27,7 @@ jobs:
 
       - name: Export secrets to .env file
         run: |
-           bash ./script.sh > env
+           bash ./script.sh 
 
 
    
