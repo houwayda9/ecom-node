@@ -37,4 +37,4 @@ for var in $(env | grep "^$prefix" ); do
     echo "$clean_var_name=$value" >> $environment
 done
 echo "Contents of .env file:"
-cat .env
+cat .$environment
