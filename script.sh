@@ -36,3 +36,7 @@ for var in $(env | grep "^$prefix" | cut -d= -f1); do
         value=$(printenv | grep "^$var=" | sed 's/^[^=]*=//')
     fi
     # Append the variable and its value to
+    echo "$clean_var_name=$value" >> .env.$environment
+done
+echo "Contents of .env file:"
+cat .env.$environment
