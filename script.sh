@@ -35,3 +35,4 @@ for var in $(printenv | grep "^$prefix" | cut -d= -f1); do
     fi
     # Append the variable and its value to the .env file
     echo "$clean_var_name=$value" >> .env
+done
