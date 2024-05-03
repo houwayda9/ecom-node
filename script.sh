@@ -4,11 +4,16 @@
 BRANCH=$(echo $GITHUB_REF | sed 's|refs/heads/||')
 PREFIX=$(echo $BRANCH | awk '{print toupper($0)}')_
 
-# Export all environment-specific secrets dynamically
-> env  # Clear or create the env file
-for var in $(env | grep "^$PREFIX"); do
-    clean_var_name=$(echo $var | cut -d= -f1 | sed "s/$PREFIX//")
-    value=$(echo $var | cut -d= -f2-)
-    echo "$clean_var_name=$value" >> env
-done
-cat env
+# Loop through secrets
+          echo "Secrets:"
+          for secret_name in $(env | grep "^$PREFIX" | sed 's/=.*//'); do
+            secret_value=$(echo "${{ secrets.$secret_name }}")
+            echo "$secret_name=$secret_value"
+          done
+
+          # Loop through environment variables
+          echo "Variables:"
+          for var_name in $(env | grep "^$PREFIX" | sed 's/=.*//'); do
+            var_value=$(echo "${{ env.$var_name }}")
+            echo "$var_name=$var_value"
+          done
