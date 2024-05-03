@@ -26,7 +26,8 @@ jobs:
       - name: test
         run: |
           set -x script.sh
-          bash ./script.sh > env
+        
+          bash .github/workflows/scripts/script.sh > .env
           
 
       
