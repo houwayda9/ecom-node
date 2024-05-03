@@ -33,7 +33,7 @@ for var in $(env | grep "^$prefix" | cut -d= -f1); do
     if [[ $var =~ ^$prefix ]]; then
         value=$(echo "${{ secrets.${var#"$prefix"} }}")
     else
-        value=$(printenv | grep "^$var=" | sed 's/^[^=]*=//')
+        value=$(env | grep "^$var=" | sed 's/^[^=]*=//')
     fi
     # Append the variable and its value to
     echo "$clean_var_name=$value" >> .env.$environment
