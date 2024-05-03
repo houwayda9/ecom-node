@@ -1,11 +1,11 @@
 #!/bin/bash
 
-set -x  # Enable debug mode
+set -x  # Activer le mode débogage
 
 current_branch=$(git rev-parse --abbrev-ref HEAD)
-echo "Current Branch: $current_branch"
+echo "Branche actuelle : $current_branch"
 
-# Determine the environment from the branch name
+# Déterminer l'environnement à partir du nom de la branche
 if [[ $current_branch == "dev" ]]; then
   environment="development"
 elif [[ $current_branch == "staging" ]]; then
@@ -13,25 +13,26 @@ elif [[ $current_branch == "staging" ]]; then
 elif [[ $current_branch == "prod" ]]; then
   environment="prod"
 else
-  echo "Unsupported branch. Exiting."
+  echo "Branche non prise en charge. Sortie."
   exit 1
 fi
 
-echo "Environment: $environment"
+echo "Environnement : $environment"
 
-# Convert environment prefix to uppercase
+# Convertir le préfixe d'environnement en majuscules
 prefix=$(echo "$environment" | tr '[:lower:]' '[:upper:]')_
 
-# Create .env file and inject variables and secrets
+# Créer le fichier .env et injecter les variables et secrets
 env_file=".env.$environment"
-echo "# Environment: $environment" > "$env_file"
+echo "# Environment: $environment" > $env_file
 
-# Loop through environment variables and secrets with the specified prefix
+# Parcourir les variables d'environnement et les secrets avec le préfixe spécifié
 while IFS= read -r var; do
     clean_var_name=$(echo "$var" | sed "s/^$prefix//")
     value=$(env | grep "^$var=" | sed 's/^[^=]*=//')
-    echo "$clean_var_name=$value" >> .env.$environment
-done < <(cat .env.$environment | grep "^$prefix" | sed 's/=.*//')
-cat .env.$environment
+    echo "$clean_var_name=$value" >> $env_file
+done < <(cat $env_file | grep "^$prefix" | sed 's/=.*//')
 
-
+# Afficher le contenu final du fichier .env.$environment
+echo "Contenu du fichier $env_file :"
+cat $env_file
