@@ -27,8 +27,9 @@ jobs:
         run: |
           
           echo "Reading variables from the environment..."
-          for var in $(env | grep "^PROD_" | awk -F= '{print $1}'); do
-            echo "$var=${!var}"
+          variables=("PROD_HOST" "PROD_URL" "OTHER_VARIABLE")  
+          for var in "${variables[@]}"; do
+            echo "$var=${{ secrets.$var }}"
           done
 
    
