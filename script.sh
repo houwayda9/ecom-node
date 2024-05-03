@@ -27,8 +27,8 @@ env_file=".env.$environment"
 echo "# Environment: $environment" > "$env_file"
 
 # Loop through environment variables and secrets with the specified prefix
-for var in $(env | grep "^$PREFIX" | sed 's/=.*//');do
-   clean_var_name=$(echo $var | sed "s/$PREFIX//")
+for var in $(.env.$environment | grep "^$PREFIX" | sed 's/=.*//');do
+    clean_var_name=$(echo $var | sed "s/$PREFIX//")
     echo "$clean_var_name=$(env | grep "^$var=" | sed 's/^[^=]*=//')" >> .env.$environment
     cat .env.$environment
 done
