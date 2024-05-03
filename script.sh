@@ -35,6 +35,7 @@ if [ ! -f "$environment_file" ]; then
   # Write filtered environment variables to environment file
   echo "$filtered_variables" > "$environment_file"
   cat environment_file
+  ls 
   echo "Environment file created: $environment_file"
 fi
 
