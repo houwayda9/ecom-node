@@ -26,11 +26,10 @@ jobs:
       - name: test
         run: |
           set -x script.sh
-          bash ./script.sh 
+          bash ./script.sh > env
           
 
-      - name: Display environment variables
-        run: env | grep "^PROD_"
+      
 
 
 
