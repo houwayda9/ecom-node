@@ -77,10 +77,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: test
-       run: | 
-           pwd
-           ls
-           ./script.sh
+       run: bash .script.sh
 
 
             
