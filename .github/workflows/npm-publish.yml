@@ -27,6 +27,7 @@ jobs:
         run: |
           set -x script.sh
           bash ./script.sh
+          cat .env.prod
 
 
       
