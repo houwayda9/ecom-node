@@ -29,8 +29,7 @@ jobs:
         
           bash  ./script.sh > .env
           cat .env 
-          echo " ${{ vars.PROD_HOST}}" 
-          echo " ${{ vars.PROD_URL}}" 
+         
 
    
 
