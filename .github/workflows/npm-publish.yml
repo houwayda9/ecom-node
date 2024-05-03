@@ -25,11 +25,11 @@ jobs:
         run:  ls -la
       - name: test
         run: |
-          set -x script.sh
-         
-          bash  ./script.sh > .env
           
-          cat .env
+          echo "Reading variables from the environment..."
+          for var in $(env | awk -F= '{print $1}'); do
+            echo "$var=${!var}"
+          done
 
    
 
