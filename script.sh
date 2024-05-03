@@ -15,6 +15,10 @@ echo "# Environment: $environment" > .env
 prefix="${environment}_"
 for var in $(compgen -v | grep "^$prefix"); do
     
+    # Remove the prefix from the variable name
+    var_name="${var#$prefix}"
+    # Get the value of the variable
+    var_value="${!var}"
     # Write variable to .env file
     echo "$var" >> .env
 done
