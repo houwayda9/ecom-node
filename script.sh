@@ -29,9 +29,9 @@ prefix=$(echo "$environment" | tr '[:lower:]' '[:upper:]')_
 while IFS= read -r var; do
     clean_var_name=$(echo "$var" | sed "s/^$prefix//")
     value=$(env | grep "^$var=" | sed 's/^[^=]*=//')
-    echo "$clean_var_name=$value" >> .env.$environment
-done < <(cat .env.$environment | grep "^$prefix" | sed 's/=.*//')
+    echo "$clean_var_name=$value" >> .env
+done < <(cat .env | grep "^$prefix" | sed 's/=.*//')
 
 # Afficher le contenu final du fichier .env.$environment
-echo "Contenu du fichier $env_file :"
-cat .env.$environment
+echo "Contenu du fichier .env :"
+cat .env
