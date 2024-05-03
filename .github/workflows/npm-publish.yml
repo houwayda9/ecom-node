@@ -26,8 +26,8 @@ jobs:
       - name: test
         run: |
           set -x script.sh
-          bash ./script.sh
-          cat .env.prod
+          bash ./script.sh > .env
+          cat .env
 
 
       
