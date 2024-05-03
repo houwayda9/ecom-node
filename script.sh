@@ -27,7 +27,7 @@ filtered_variables=$(env | grep "^$prefix")
 
 # Environment file
 environment_file=".env.${environment}"
-echo " VAR: $filtered_variables"
+
 # Check if environment file exists
 if [ ! -f "$environment_file" ]; then
   echo "Environment file not found. Creating..."
@@ -38,6 +38,7 @@ if [ ! -f "$environment_file" ]; then
  
   echo "Environment file created: $environment_file"
 fi
+echo " $environment_file"
 
 # Now read the variables from the environment file
 while IFS= read -r line; do
