@@ -19,8 +19,10 @@ fi
 
 echo "Environment: $environment"
 
+# Convert environment prefix to uppercase
+prefix=$(echo "$environment" | tr '[:lower:]' '[:upper:]')_
+
 # Filter and process environment variables based on prefix
-prefix="${environment}_"
 filtered_variables=$(printenv | grep "^$prefix")
 
 # Environment file
