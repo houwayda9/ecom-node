@@ -24,7 +24,7 @@ jobs:
       - name: ls
         run:  ls -la
       - name: Display environment variables
-        run: env | grep "^PROD_"
+        run: .env.prod | grep "^PROD_"
 
    
 
