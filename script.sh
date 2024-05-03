@@ -22,26 +22,15 @@ echo "Environment: $environment"
 # Convert environment prefix to uppercase
 prefix=$(echo "$environment" | tr '[:lower:]' '[:upper:]')_
 
-# Filter and process environment variables based on prefix
-filtered_variables=$(env | grep "^$prefix")
-
-# Environment file
-environment_file=".env.${environment}"
-
-# Check if environment file exists
-if [ ! -f "$environment_file" ]; then
-  echo "Environment file not found. Creating..."
-
-  # Write filtered environment variables to environment file
-  echo "$filtered_variables" > "$environment_file"
- 
- 
-  echo "Environment file created: $environment_file"
-fi
-echo " $environment_file"
-
-# Now read the variables from the environment file
-while IFS= read -r line; do
-  echo "Variable: $line"
-  # You can process each variable here
-done < "$environment_file"
+# Loop through environment variables and secrets with the specified prefix
+for var in $(env | grep "^$prefix" | sed 's/=.*//'); do
+    clean_var_name=$(echo $var | sed "s/$prefix//")
+    # If the variable is a secret, access it using GitHub Actions syntax
+    if [[ $var =~ ^$prefix ]]; then
+        value=$(echo "${{ secrets.${var#"$prefix"} }}")
+    else
+        value=$(env | grep "^$var=" | sed 's/^[^=]*=//')
+    fi
+    # Append the variable and its value to the .env file
+    echo "$clean_var_name=$value" >> .env
+done
