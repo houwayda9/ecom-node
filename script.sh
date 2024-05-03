@@ -52,3 +52,7 @@ while IFS= read -r line; do
   echo "Variable: $line"
   # You can process each variable here
 done < "$environment_file"
+
+
+
+
