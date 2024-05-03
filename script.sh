@@ -23,16 +23,15 @@ echo "Environnement : $environment"
 prefix=$(echo "$environment" | tr '[:lower:]' '[:upper:]')_
 
 # Créer le fichier .env et injecter les variables et secrets
-env_file=".env.$environment"
-echo "# Environment: $environment" > $env_file
+# env_file=".env.$environment"
 
 # Parcourir les variables d'environnement et les secrets avec le préfixe spécifié
 while IFS= read -r var; do
     clean_var_name=$(echo "$var" | sed "s/^$prefix//")
     value=$(env | grep "^$var=" | sed 's/^[^=]*=//')
-    echo "$clean_var_name=$value" >> $env_file
-done < <(cat $env_file | grep "^$prefix" | sed 's/=.*//')
+    echo "$clean_var_name=$value" >> .env.$environment
+done < <(cat .env.$environment | grep "^$prefix" | sed 's/=.*//')
 
 # Afficher le contenu final du fichier .env.$environment
 echo "Contenu du fichier $env_file :"
-cat $env_file
+cat .env.$environment
