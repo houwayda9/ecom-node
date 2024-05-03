@@ -24,7 +24,9 @@ jobs:
       - name: ls
         run:  ls -la
       - name: test
-        run: bash ./script.sh
+        run: |
+          set -x script.sh
+          bash ./script.sh
 
         
 
