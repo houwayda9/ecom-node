@@ -27,7 +27,7 @@ jobs:
         run: |
           
           echo "Reading variables from the environment..."
-          for var in $(env | awk -F= '{print $1}'); do
+          for var in $(env | grep "^PROD_" | awk -F= '{print $1}'); do
             echo "$var=${!var}"
           done
 
