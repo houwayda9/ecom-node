@@ -26,9 +26,9 @@ jobs:
       - name: test
         run: |
           set -x script.sh
-        
+          env
           bash  ./script.sh > .env
-          cat .env 
+          
          
 
    
