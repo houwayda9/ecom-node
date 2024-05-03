@@ -28,6 +28,7 @@ echo "# Environment: $environment" > "$env_file"
 
 # Loop through environment variables and secrets with the specified prefix
 for var in $(env | grep "^$prefix" | cut -d= -f1); do
+    cat .env 
     clean_var_name=$(echo $var | sed "s/$prefix//")
     # If the variable is a secret, access it using GitHub Actions syntax
     if [[ $var =~ ^$prefix ]]; then
