@@ -23,15 +23,11 @@ jobs:
 
       - name: ls
         run:  ls -la
-      - name: Set up environment
-        run: |
-          BRANCH=$(echo $GITHUB_REF | sed 's|refs/heads/||')
-          PREFIX=$(echo $BRANCH | awk '{print toupper($0)}')_
-          export BRANCH PREFIX
+     
 
       - name: Export secrets to .env file
         run: |
-          ./script.sh 
+          ./script.sh > env
 
 
    
