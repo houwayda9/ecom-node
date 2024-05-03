@@ -25,7 +25,6 @@ jobs:
         run:  ls -la
       - name: test
         run: |
-          
           echo "Reading variables from the environment..."
           variables=("PROD_HOST" "PROD_URL" "OTHER_VARIABLE")  
           for var in "${variables[@]}"; do
