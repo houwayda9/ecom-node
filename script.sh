@@ -17,7 +17,7 @@ create_env_file_without_prefix() {
     done < <(printenv | grep -iE "^${prefix}_")
 
    
-    cat ".env.PROD"
+    cat "$env_file"
 }
 
 
