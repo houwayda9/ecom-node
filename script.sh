@@ -1,14 +1,10 @@
-#!/bin/bash
+# list_variables.sh
+# Create a header for the .env file
+echo "# Exported Environment Variables" > ".env"
 
-# Name of the .env file to be created
-ENV_FILE=".env"
-
-# Create or clear the .env file
-echo "# Exported Environment Variables" > "$ENV_FILE"
-
-# Loop through each environment variable, excluding GitHub Actions specific prefixes
-printenv | grep -Ev "^(PROD_)" | while IFS='=' read -r key value; do
-    echo "$key=$value" >> "$ENV_FILE"
+# Filter environment variables by prefix using `grep`
+printenv | grep -E '^(PROD_|DOCKER_)' | while IFS='=' read -r key value; do
+    echo "$key=$value" >> ".env"
 done
 
-echo "Environment variables exported to ${ENV_FILE}"
+echo "Selected environment variables exported to .env"
