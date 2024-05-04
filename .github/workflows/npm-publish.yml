@@ -34,6 +34,7 @@ jobs:
            set -x
            
            bash ./script.sh 
+           cat .env.PROD
       
     
            
