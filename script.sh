@@ -1,18 +1,21 @@
 #!/bin/bash
 
-# Function to save branch-prefixed environment variables to an .env file
-create_branch_specific_env_file() {
-    local branch_name=$1
-    local upper_branch_name=${branch_name^^}
-    local env_file=".env.${upper_branch_name}"
+# Function to save environment variables to a .env file, stripping a prefix
+create_env_file_without_prefix() {
+    local prefix=$1
+    local branch_name=$2
+    local env_file=".env.${branch_name^^}"
 
-    echo "Creating $env_file with variables starting with '${upper_branch_name}_'"
+    echo "Creating $env_file with variables starting with '${prefix}_' but without the prefix"
 
     # Initialize the .env file
-    echo "# Environment variables for branch $upper_branch_name" > "$env_file"
+    echo "# Environment variables for branch $branch_name (prefix '${prefix}_' removed)" > "$env_file"
 
-    # Extract only variables starting with the branch name in uppercase and add them to the .env file
-    printenv | grep -iE "^${upper_branch_name}_" | sort >> "$env_file"
+    # Extract variables with the prefix and remove the prefix
+    while IFS='=' read -r key value; do
+        stripped_key="${key#${prefix}_}"  # Remove the prefix
+        echo "${stripped_key}=${value}" >> "$env_file"
+    done < <(printenv | grep -iE "^${prefix}_")
 
     echo "Generated .env file:"
     cat "$env_file"
@@ -24,8 +27,11 @@ if [ -z "$GITHUB_REF" ]; then
     exit 1
 fi
 
-# Extract the branch name from GITHUB_REF and convert to lowercase
+# Extract the branch name from GITHUB_REF
 branch_name=$(echo "$GITHUB_REF" | awk -F'/' '{print tolower($3)}')
 
-# Call function to generate the .env file with branch-specific variables
-create_branch_specific_env_file "$branch_name"
+# Define the prefix you want to remove (e.g., PROD)
+prefix="PROD"
+
+# Call function to generate the .env file without the given prefix
+create_env_file_without_prefix "$prefix" "$branch_name"
