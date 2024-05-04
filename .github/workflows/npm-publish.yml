@@ -25,7 +25,11 @@ jobs:
           token: ${{ secrets.VARSECRET }}
 
       - name: env file
-        
+        env:
+          PROD_HOST: ${{ vars.PROD_HOST }}
+          PROD_URL: ${{ vars.PROD_URL }}
+          DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
            set -x
            chmod +x script.sh
