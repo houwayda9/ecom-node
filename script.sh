@@ -9,7 +9,7 @@ list_environment_variables_and_secrets() {
     echo "Environment: $branch_name"
 
     # Retrieve environment variables and secrets using GitHub API
-    local response=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+    local response=$(curl -s -H "Authorization: Bearer $G_TOKEN2" \
                             -H "Accept: application/vnd.github.v3+json" \
                             "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/secrets")
     
@@ -23,7 +23,7 @@ if [ -z "$GITHUB_REF" ]; then
     exit 1
 fi
 
-if [ -z "$GITHUB_TOKEN" ]; then
+if [ -z "$G_TOKEN2" ]; then
     echo "Error: GITHUB_TOKEN is not set. Please set up a personal access token with repo scope and assign it to GITHUB_TOKEN."
     exit 1
 fi
