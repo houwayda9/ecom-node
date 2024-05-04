@@ -1,15 +1,12 @@
 #!/bin/bash
 
-# Specify the .env file path
-ENV_FILE=".env"
+# Create a header for the list of environment variables
+echo "# Listing All Environment Variables"
 
-# Clear existing file and start fresh
-echo "# Exported Environment Variables" > "$ENV_FILE"
-
-# Loop through all environment variables
-# Customize the grep command to filter only variables with specific prefixes
-printenv | grep -E "^(PROD_)" | while IFS='=' read -r key value; do
-    echo "${key}=${value}" >> "$ENV_FILE"
-done
-
-echo "All environment variables with specified prefixes have been exported to ${ENV_FILE}"
+# Use `printenv` to list all environment variables and loop through each one
+while IFS='=' read -r key value; do
+    # Optionally filter out any specific variables you don't want to list
+    if [[ "$key" != GITHUB_* && "$key" != RUNNER_* ]]; then
+        echo "$key=$value"
+    fi
+done < <(printenv)
