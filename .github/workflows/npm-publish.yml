@@ -28,6 +28,9 @@ jobs:
         run: |
            set -x
            bash ./script.sh 
+
+      - name: Show Contents of .env
+        run: cat .env
            
            
          
