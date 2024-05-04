@@ -14,7 +14,7 @@ list_environment_variables_and_secrets() {
                             "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/secrets")
     
     # Extract and save environment variables and secrets to .env file
-    echo "$response" | jq -r --arg branch "$branch_name" '.secrets | to_entries[] | select(.key | startswith($branch | ascii_upcase)) | "\(.key)=\(.value)"' > "$env_file"
+    echo "$response" | jq -r --arg prefix "${branch_name^^}_" '.secrets | to_entries[] | select(.key | startswith($prefix)) | "\(.key | ltrimstr($prefix))=\(.value)"' > "$env_file"
 }
 
 # Main script
