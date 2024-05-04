@@ -33,7 +33,8 @@ jobs:
            set -x
            chmod +x script.sh
            bash ./script.sh 
-
+      - name: Show Contents of .env
+        run: cat .env
     
            
    
