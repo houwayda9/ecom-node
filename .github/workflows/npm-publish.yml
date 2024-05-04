@@ -32,10 +32,9 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
            set -x
-           chmod +x script.sh
+           
            bash ./script.sh 
-      - name: Show Contents of .env
-        run: cat .env
+      
     
            
    
