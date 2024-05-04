@@ -32,7 +32,8 @@ jobs:
       - name: Show Contents of .env
         run: cat .env
            
-           
+      - name: List Available Environment Variables
+        run: printenv | sort
          
          
 
