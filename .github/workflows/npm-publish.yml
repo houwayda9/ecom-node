@@ -31,13 +31,13 @@ jobs:
            DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
         run: |
            set -x
+           chmod +x script.sh
            bash ./script.sh 
 
       - name: Show Contents of .env
         run: cat .env
            
-      - name: List Available Environment Variables
-        run: printenv | sort
+   
          
          
 
