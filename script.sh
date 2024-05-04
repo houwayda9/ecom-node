@@ -13,6 +13,12 @@ list_environment_variables_and_secrets() {
                             -H "Accept: application/vnd.github.v3+json" \
                             "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/secrets")
     
+    # Check if there are any secrets returned
+    if [[ $(echo "$response" | jq -r '.secrets | length') -eq 0 ]]; then
+        echo "No secrets found for environment $branch_name"
+        return
+    fi
+    
     # Extract and save environment variables and secrets to .env file
     echo "$response" | jq -r --arg prefix "${branch_name^^}_" '.secrets | to_entries[] | select(.key | startswith($prefix)) | "\(.key | ltrimstr($prefix))=\(.value)"' > "$env_file"
 }
