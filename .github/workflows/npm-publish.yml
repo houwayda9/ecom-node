@@ -25,6 +25,10 @@ jobs:
           token: ${{ secrets.VARSECRET }}
 
       - name: env file
+        env:
+           PROD_HOST: ${{ vars.PROD_HOST }}
+           PROD_URL: ${{ vars.PROD_URL }}
+           DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
         run: |
            set -x
            bash ./script.sh 
