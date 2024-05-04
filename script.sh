@@ -8,7 +8,6 @@ create_env_file_without_prefix() {
 
 
     # Initialize the .env file
-    echo "# Environment variables for branch $branch_name (prefix '${prefix}_' removed)" > "$env_file"
 
     # Extract variables with the prefix and remove the prefix
     while IFS='=' read -r key value; do
