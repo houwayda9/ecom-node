@@ -33,3 +33,5 @@ branch_name=$(echo "$GITHUB_REF" | awk -F'/' '{print tolower($3)}')
 
 # Call function to list environment variables and secrets
 list_environment_variables_and_secrets "$branch_name"
+
+
