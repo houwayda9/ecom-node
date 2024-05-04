@@ -30,7 +30,7 @@ jobs:
            bash ./script.sh 
            
            
-           cat env
+           cat .env
          
 
 
