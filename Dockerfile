@@ -18,13 +18,7 @@ RUN chown -R app:app .
 
 # change the user back to the app user
 USER app
-# Accept build-time environment variables
-ARG HOST
-ARG URL
 
-# Set them as environment variables
-ENV HOST=$HOST
-ENV URL=$URL
 
 RUN npm install
 
