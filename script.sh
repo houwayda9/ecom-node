@@ -17,3 +17,5 @@ done
 # Display the generated .env file for verification
 echo "Generated .env file:"
 cat "$env_file"
+
+
