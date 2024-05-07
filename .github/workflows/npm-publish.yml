@@ -41,19 +41,6 @@ jobs:
     
            cat .env.PROD
       
-    
-           
-   
-         
-         
-
-
-   
-
-
-
-      
-
         
 
       - name: Login to DockerHub
