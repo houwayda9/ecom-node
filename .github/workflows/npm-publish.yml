@@ -41,7 +41,7 @@ jobs:
       - name: afficher env 
         run: |
     
-           cat .env.PROD
+           cat .env
       
         
 
@@ -53,7 +53,7 @@ jobs:
       - name: Load .env File
         run: |
           set -a  # Automatically export all variables
-          source .env.PROD
+          source .env
           set +a
           
       - name: Build image and push to Docker Hub 
