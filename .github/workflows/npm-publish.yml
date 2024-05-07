@@ -12,6 +12,8 @@ on:
 
 jobs:
   
+  
+   
    build-and-push-docker-image:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
