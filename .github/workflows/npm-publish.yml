@@ -49,11 +49,7 @@ jobs:
         with:
           username: ${{ vars.DOCKER_USERNAME}}
           password:  ${{ secrets.DOCKER_PASSWORD }}
-      - name: Load .env File
-        run: |
-          set -a  # Automatically export all variables
-          source .env
-          set +a
+     
           
       - name: Build image and push to Docker Hub 
         uses: docker/build-push-action@v2
