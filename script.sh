@@ -4,7 +4,7 @@
 
 branch_name=$(echo "$GITHUB_REF" | awk -F'/' '{print tolower($3)}')
 prefix=$(echo "$branch_name" | tr '[:lower:]' '[:upper:]')
-env_file=".env.${prefix}"
+env_file=".env"
 
 
 
