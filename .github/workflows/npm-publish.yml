@@ -20,11 +20,10 @@ jobs:
     environment:
       name: ${{ github.ref == 'refs/heads/prod' && 'prod' || 'dev' }} 
     steps:
-      - name: Checkout another repository
-        uses: actions/checkout@v2
-        with:
-          repository: houwayda9/ecom-node
-          token: ${{ secrets.VARSECRET }}
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+          
 
       - name: env file
         env:
@@ -60,7 +59,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./
-         
           tags: |
             houwayda/ecom_back_${{ github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}:${{ github.sha }}
           push: true
