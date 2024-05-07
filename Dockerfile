@@ -5,7 +5,7 @@ RUN addgroup app && adduser -S -G app app
 USER app
 
 WORKDIR /app
-COPY . . 
+
 
 COPY package*.json ./
 
@@ -23,7 +23,7 @@ USER app
 
 RUN npm install
 
-
+COPY . . 
 
 EXPOSE 8000 
 
