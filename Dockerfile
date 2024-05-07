@@ -6,7 +6,6 @@ USER app
 
 WORKDIR /app
 
-COPY . . 
 
 COPY package*.json ./
 
@@ -24,6 +23,7 @@ USER app
 
 RUN npm install
 
+COPY . . 
 
 
 EXPOSE 8000 
