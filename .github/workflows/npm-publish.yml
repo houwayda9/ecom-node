@@ -53,6 +53,10 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./
+          build-args: |
+            PROD_HOST=${{ env.PROD_HOST }}
+            PROD_URL=${{ env.PROD_URL }}
+            DOCKER_USERNAME=${{ env.DOCKER_USERNAME }}
           tags: |
             houwayda/ecom_back_${{ github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}:${{ github.sha }}
           push: true
