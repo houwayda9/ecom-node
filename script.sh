@@ -7,7 +7,7 @@ env_file=".env"
 secrets_file=".secrets"
 
 # Define a pattern or list of secret keys
-secrets_pattern="SECRET|PASSWORD|API_KEY"
+secrets_pattern="SECRET|PASSWORD|API_KEY|MDP"
 
 # Read environment variables and separate them based on the pattern
 printenv | grep -iE "^${prefix}_" | while IFS='=' read -r key value; do
