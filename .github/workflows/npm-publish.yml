@@ -45,7 +45,7 @@ jobs:
       - name: afficher env 
         run: |
     
-           cat .env_PROD
+           cat .env_${{ github.event.environment.name }}
            cat .secrets
       
       - name: Upload .env File as Artifact
