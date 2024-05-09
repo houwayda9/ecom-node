@@ -103,7 +103,7 @@ jobs:
             esac
             cd houwayda9/ecom-kustomize/kustomize/overlays/${overlay_dir}
             ls
-            cp .env .houwayda9/ecom-kustomize/kustomize/overlays/${overlay_dir}/.env
+            cp .env ./ecom-kustomize/kustomize/overlays/${overlay_dir}/.env
             sed -i '/^images:$/,/^$/ { /- name: houwayda\/ecom-back/,/newTag:/ s/newTag: .*/newTag: ${{ github.sha }}/ }' kustomization.yaml
             git config --global user.email ${{ secrets.USER_EMAIL }}
             git config --global user.name ${{ secrets.USER_NAME }}
