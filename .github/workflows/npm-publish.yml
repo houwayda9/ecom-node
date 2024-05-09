@@ -48,7 +48,7 @@ jobs:
       - name: Upload .env File as Artifact
         uses: actions/upload-artifact@v2
         with:
-         name: env-file
+         name: .env
          path: .env
         id: upload-artifact
 
