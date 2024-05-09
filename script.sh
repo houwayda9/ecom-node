@@ -3,7 +3,7 @@
 # Assuming GITHUB_REF is something like refs/heads/feature-branch
 branch_name=$(echo "$GITHUB_REF" | awk -F'/' '{print tolower($3)}')
 prefix=$(echo "$branch_name" | tr '[:lower:]' '[:upper:]')
-env_file=".env"
+env_file=".env_${prefix}"
 secrets_file=".secrets"
 
 # Define a pattern or list of secret keys
