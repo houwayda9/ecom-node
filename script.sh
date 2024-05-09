@@ -4,7 +4,7 @@
 branch_name=$(echo "$GITHUB_REF" | awk -F'/' '{print tolower($3)}')
 prefix=$(echo "$branch_name" | tr '[:lower:]' '[:upper:]')
 env_file=".env_${branch_name}"
-secrets_file=".secrets"
+secrets_file=".secrets_${branch_name}"
 
 # Define a pattern or list of secret keys
 secrets_pattern="SECRET|PASSWORD|API_KEY|MDP"
