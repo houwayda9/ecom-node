@@ -101,7 +101,6 @@ jobs:
               exit 1
               ;;
             esac
-            cp .env ./ecom-kustomize/kustomize/overlays/${overlay_dir}/.env
             cd houwayda9/ecom-kustomize/kustomize/overlays/${overlay_dir}
             ls -la
             sed -i '/^images:$/,/^$/ { /- name: houwayda\/ecom-back/,/newTag:/ s/newTag: .*/newTag: ${{ github.sha }}/ }' kustomization.yaml
