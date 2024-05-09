@@ -45,10 +45,12 @@ jobs:
            cat .env
            cat .secrets
       
-      - name: Download .env File
-        uses: actions/download-artifact@v2
+      - name: Upload .env File as Artifact
+        uses: actions/upload-artifact@v2
         with:
-         name: .env
+         name: env-file
+         path: .env
+        id: upload-artifact
 
       - name: Login to DockerHub
         uses: docker/login-action@v2
@@ -77,6 +79,10 @@ jobs:
           ref: main
           token: ${{ secrets.G_TOKEN }}
           path: houwayda9/ecom-kustomize 
+      - name: Download .env File
+        uses: actions/download-artifact@v2
+        with:
+         name: .env
       
       - name: Update Kustomize file
         run: |
