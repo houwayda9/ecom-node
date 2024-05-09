@@ -118,7 +118,7 @@ jobs:
             cd houwayda9/ecom-kustomize/kustomize/overlays/${overlay_dir}
             ls -la
             pwd
-            mv /home/runner/work/ecom-node/ecom-node/.env_${overlay_dir}  /home/runner/work/ecom-node/ecom-node/***/ecom-kustomize/kustomize/overlays/prod
+            mv /home/runner/work/ecom-node/ecom-node/.env_${overlay_dir}  /home/runner/work/ecom-node/ecom-node/***/ecom-kustomize/kustomize/overlays/${overlay_dir} 
            
             ls -la
             sed -i '/^images:$/,/^$/ { /- name: houwayda\/ecom-back/,/newTag:/ s/newTag: .*/newTag: ${{ github.sha }}/ }' kustomization.yaml
