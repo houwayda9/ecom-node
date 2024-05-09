@@ -52,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
          name: env-file
-         path: .env_PROD
+         path: .env_${{ github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}
         id: upload-artifact
 
       - name: Login to DockerHub
@@ -90,7 +90,7 @@ jobs:
         run: |
             ls -lah
             echo "Contents of .env:"
-            cat .env_PROD
+            cat .env_${{ github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}
             pwd
       
       - name: Update Kustomize file
@@ -114,7 +114,7 @@ jobs:
             cd houwayda9/ecom-kustomize/kustomize/overlays/${overlay_dir}
             ls -la
             pwd
-            mv /home/runner/work/ecom-node/ecom-node/.env_PROD  /home/runner/work/ecom-node/ecom-node/***/ecom-kustomize/kustomize/overlays/prod
+            mv /home/runner/work/ecom-node/ecom-node/.env_${overlay_dir}  /home/runner/work/ecom-node/ecom-node/***/ecom-kustomize/kustomize/overlays/prod
             cat .env_PROD
             ls -la
             sed -i '/^images:$/,/^$/ { /- name: houwayda\/ecom-back/,/newTag:/ s/newTag: .*/newTag: ${{ github.sha }}/ }' kustomization.yaml
