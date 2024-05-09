@@ -87,7 +87,8 @@ jobs:
         run: |
             ls -lah
             echo "Contents of .env:"
-              cat .env_PROD
+            cat .env_PROD
+            pwd
       
       - name: Update Kustomize file
         run: |
