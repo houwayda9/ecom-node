@@ -82,7 +82,7 @@ jobs:
       - name: Download .env File
         uses: actions/download-artifact@v2
         with:
-         name: env_ PROD
+         name: upload-artifact
       
       - name: Update Kustomize file
         run: |
