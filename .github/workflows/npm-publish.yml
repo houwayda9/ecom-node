@@ -48,7 +48,7 @@ jobs:
       - name: Upload .env File as Artifact
         uses: actions/upload-artifact@v2
         with:
-         name: .env
+         name: env-file
          path: .env
         id: upload-artifact
 
@@ -82,7 +82,7 @@ jobs:
       - name: Download .env File
         uses: actions/download-artifact@v2
         with:
-         name: .env
+         name: env-file
       
       - name: Update Kustomize file
         run: |
@@ -105,7 +105,7 @@ jobs:
             cd houwayda9/ecom-kustomize/kustomize/overlays/${overlay_dir}
             ls -la
             pwd
-            cp .env /home/runner/work/ecom-node/ecom-node/***/ecom-kustomize/kustomize/overlays/prod/.env
+            cp env-file /home/runner/work/ecom-node/ecom-node/***/ecom-kustomize/kustomize/overlays/prod/.env
             sed -i '/^images:$/,/^$/ { /- name: houwayda\/ecom-back/,/newTag:/ s/newTag: .*/newTag: ${{ github.sha }}/ }' kustomization.yaml
             git config --global user.email ${{ secrets.USER_EMAIL }}
             git config --global user.name ${{ secrets.USER_NAME }}
