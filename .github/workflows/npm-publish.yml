@@ -114,6 +114,7 @@ jobs:
             pwd
             mv /home/runner/work/ecom-node/ecom-node/.env_PROD  /home/runner/work/ecom-node/ecom-node/***/ecom-kustomize/kustomize/overlays/prod
             cat .env_PROD
+            ls -la
             sed -i '/^images:$/,/^$/ { /- name: houwayda\/ecom-back/,/newTag:/ s/newTag: .*/newTag: ${{ github.sha }}/ }' kustomization.yaml
             git config --global user.email ${{ secrets.USER_EMAIL }}
             git config --global user.name ${{ secrets.USER_NAME }}
