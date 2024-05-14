@@ -1,5 +1,3 @@
-
-
 #!/bin/bash
 
 # Assuming GITHUB_REF is something like refs/heads/feature-branch
@@ -21,6 +19,8 @@ printenv | grep -iE "^${prefix}_" | while IFS='=' read -r key value; do
 done
 
 # Display the generated files for verification
-echo "Generated files for environment and secrets:"
+echo "Generated environment variables file:"
 cat "$env_file"
+
+echo "Generated secrets file:"
 cat "$secrets_file"
