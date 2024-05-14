@@ -13,9 +13,9 @@ printenv | grep -iE "^${prefix}_" | while IFS='=' read -r key value; do
     stripped_key="${key#${prefix}_}"
     # Check if the key matches the secrets pattern
     if [[ "$stripped_key" =~ $secrets_pattern ]]; then
-        echo "${stripped_key}=${value}" >> "$secrets_file"
-    else
         echo "${stripped_key}=${value}" >> "$env_file"
+    else
+        echo "${stripped_key}=${value}" >> "$secrets_file"
     fi
 done
 
