@@ -42,7 +42,12 @@ jobs:
       - name: afficher env 
         run: |
     
+           cat .env_${{ github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}
+      - name: afficher secret
+        run: |
+    
            cat .secrets_${{ github.ref == 'refs/heads/prod' && 'prod' || 'dev' }}
+
 
       - name: Upload .env File as Artifact
         uses: actions/upload-artifact@v2
